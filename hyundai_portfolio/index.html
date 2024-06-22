@@ -13,17 +13,67 @@
 	</head>
 	<link rel="stylesheet" href="styles.css">
 	<style>
-  /* CSS for section effects */
-  .section {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-  
-  .section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Video Background */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    filter: brightness(50%); /* Dim the video for a muted effect */
+}
+#top .container,
+    #top .container header,
+    #top .container header h2,
+    #top .container header p,
+	#top .container header strong,
+    #top .container footer a {
+        color: #fff !important; /* Set text color to white */
+    }
+
+    #top .container footer a.button {
+        background-color: #3498db; /* Optional: Button background color */
+        border: none; /* Remove any border */
+        color: #fff; /* Button text color */
+    }
+/* Ensure container content is above the video */
+#top .container {
+    position: relative;
+    z-index: 2; /* Keep text above everything else */
+    color: #fff; /* Text color for contrast */
+}
+
+/* Keep other styles for #top */
+#top {
+    position: relative;
+    overflow: hidden;
+    height: 100vh; /* Full height for cover effect */
+}
+	  
+		/* Other CSS from previous sections */
+		.section {
+			opacity: 0;
+			transform: translateY(50px);
+			transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+		}
+	  
+		.section.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	  
 		@media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1200px) {
 			footer {
 				font-size: 12px;
@@ -32,28 +82,28 @@
 				height: auto;
 			}
 		}
-		
+	  
 		@media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1900px) {
 			.break-m {
-			  display: block;
+				display: block;
 			}
-		  }
-		  
-		
+		}
+	  
 		.icon.fa-kakao {
 			background: url('images/kakao.png') no-repeat center center;
 			background-size: cover;
 		}
+	  
 		.icon.fa-phon {
 			background: url('images/phon.png') no-repeat center center;
 			background-size: cover;
 		}
+	  
 		.icon.fa-mail {
 			background: url('images/kakao.png') no-repeat center center;
 			background-size: cover;
 		}
-		</style>
-		<style>
+	  
 		/* Modal (background) */
 		.modal {
 			display: none; /* Hidden by default */
@@ -68,7 +118,7 @@
 			background-color: rgb(0,0,0); /* Fallback color */
 			background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 		}
-		
+	  
 		/* Modal Content (image) */
 		.modal-content {
 			margin: auto;
@@ -76,74 +126,74 @@
 			width: 80%;
 			max-width: 700px;
 		}
-		
-/* Gallery Styles */
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.gallery-item {
-    position: relative;
-    margin: 10px;
-    width: calc(33.333% - 20px); /* Three items per row with spacing */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Centering the caption and making its size relative to the gallery item */
-.caption {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    box-sizing: border-box;
-    border-radius: 5px; /* Optional: adds rounded corners */
-    max-width: 90%; /* Ensures the caption doesn't stretch too wide */
-    font-size: 3vw; /* Dynamic font size relative to viewport width */
-    line-height: 1.2; /* For better readability */
-    overflow-wrap: break-word; /* Ensure long words are broken */
-}
-/* Ensure caption scales down on smaller screens */
-@media screen and (max-width: 600px) {
-    .caption {
-        font-size: 2vw; /* Increase relative size for smaller screens */
-    }
-}
-
-@media screen and (min-width: 601px) and (max-width: 1200px) {
-    .caption {
-        font-size: 2vw; /* Intermediate size for medium screens */
-    }
-}
-
-@media screen and (min-width: 1201px) {
-    .caption {
-        font-size: 2vw; /* Default relative size for larger screens */
-    }
-}
-
-			
+	  
+		/* Gallery Styles */
+		.gallery {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+	  
+		.gallery-item {
+			position: relative;
+			margin: 10px;
+			width: calc(33.333% - 20px); /* Three items per row with spacing */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	  
+		.gallery-item img {
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+	  
+		/* Centering the caption and making its size relative to the gallery item */
+		.caption {
+			position: absolute;
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			text-align: center;
+			padding: 5px;
+			box-sizing: border-box;
+			border-radius: 5px; /* Optional: adds rounded corners */
+			max-width: 90%; /* Ensures the caption doesn't stretch too wide */
+			font-size: 3vw; /* Dynamic font size relative to viewport width */
+			line-height: 1.2; /* For better readability */
+			overflow-wrap: break-word; /* Ensure long words are broken */
+		}
+	  
+		/* Ensure caption scales down on smaller screens */
+		@media screen and (max-width: 600px) {
+			.caption {
+				font-size: 2vw; /* Increase relative size for smaller screens */
+			}
+		}
+	  
+		@media screen and (min-width: 601px) and (max-width: 1200px) {
+			.caption {
+				font-size: 2vw; /* Intermediate size for medium screens */
+			}
+		}
+	  
+		@media screen and (min-width: 1201px) {
+			.caption {
+				font-size: 2vw; /* Default relative size for larger screens */
+			}
+		}
+	  
 		/* Add Animation - Zoom in the Modal */
 		.modal-content, #caption { 
 			animation-name: zoom;
 			animation-duration: 0.6s;
 		}
-		
+	  
 		@keyframes zoom {
 			from {transform:scale(0)} 
 			to {transform:scale(1)}
 		}
-		
+	  
 		/* The Close Button */
 		.close {
 			position: absolute;
@@ -154,13 +204,14 @@
 			font-weight: bold;
 			transition: 0.3s;
 		}
-		
+	  
 		.close:hover,
 		.close:focus {
 			color: #bbb;
 			text-decoration: none;
 			cursor: pointer;
 		}
+	  
 		/* Add this CSS for responsive video */
 		.video-container {
 			position: relative;
@@ -170,7 +221,7 @@
 			max-width: 100%;
 			background: #00000000;
 		}
-		
+	  
 		.video-container iframe {
 			position: absolute;
 			top: 0;
@@ -178,6 +229,7 @@
 			width: 100%;
 			height: 100%;
 		}
+	  
 		.video-container video {
 			position: absolute;
 			top: 0;
@@ -185,21 +237,34 @@
 			width: 100%;
 			height: 100%;
 		}
-.section .image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 300px; /* 섹션 높이를 적절히 설정 */
-}
-.image.avatar50 img {
-    max-width: 100%;
-    height: auto;
-}
-
-
-	</style>	
+	  
+		.section .image-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 300px; /* 섹션 높이를 적절히 설정 */
+		}
+	  
+		.image.avatar50 img {
+			max-width: 100%;
+			height: auto;
+		}
+	  
+		.scroll-progress {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 5px;
+			background: #3498db;
+			z-index: 1000;
+			transition: width 0.25s ease-out;
+		}
+	  </style>
+	  
+		
 	<body class="is-preload">
-
+		<div class="scroll-progress"></div>
 		<!-- Header -->
 			<div id="header">
 
@@ -245,54 +310,54 @@
 
 <!-- Rest of your HTML content -->
 
-		<!-- Main -->
-			<div id="main">
+<!-- Main -->
+<div id="main">
+    <!-- Intro -->
+	<section id="top" class="">
+		<div class="video-background">
+			<video autoplay muted loop playsinline id="bgVideo">
+				<source src="images/top.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="container">
+			<header>
+				<h2 class="alt">안녕하세요! <br class='break-m'> <strong>공간정보산업 경력 6년</strong>,<br class='break-m'>
+					<strong>공간정보엔지니어<br class='break-m'>신명호</strong> 입니다!</h2>
+				<hr>
+				<p style="font-size : 13px";>#GISDB구축 #정밀도로지도구축 #POI구축 #수치지도제작 #지하시설물 #국가기준점설치&이전<br class='break-m'>
+				#GNSS #RTK멀티콥터드론 #MMS #지거 #지하시설물탐사기 #토털스테이션<br class='break-m'>
+				#Python #SQL #HTML #QGIS #AutoCAD #Pix4D #SketchUP #2D #3D #Photoshop #Office</p>
+			</header>
+			<footer>
+				<a href="#about" class="button scrolly">소개</a>
+				<a href="#portfolio" class="button scrolly">자격증</a>
+				<a href="#abset" class="button scrolly">사업소개</a>
+			</footer>
+		</div>
+	</section>
+	
 
-				<!-- Intro -->
-					<section id="top" class="one dark cover">
-						<div class="container">
+    <!-- About Me -->
+    <section id="about" class="three">
+        <div class="container">
+            <header>
+                <h2>About Me</h2>
+            </header>
+            <a href="#" class="image featured"><img src="images/pic08.png" alt="" /></a>
+            <p>
+            저는 공간정보 6년차로써 측량과 관련된 국가사업, 공공기관, 민간 사업을 두루 경험해 보았습니다. 
+            다양한 측량 및 GIS DB구축 용역의 착수부터 준공까지하며, 시스템 유지보수까지.
+            이러한 경험들을 바탕으로 <strong style="font-weight:900;">자동화 기술과 노하우</strong>를 보여 드리겠습니다.
+            </p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/kQarRwDZmxw?si=_ClggdpXl-RVbmUN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>    
+            <br class='break-m'>
+            <div class="video-container">
+                <iframe src="https://www.youtube-nocookie.com/embed/pfNGYVuxQqs?si=AHOJKgEdDIwsJ-Vk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>      
+        </div>
 
-							<header>
-								<h2 class="alt">안녕하세요! <br class='break-m'> <strong>공간정보산업 경력 6년</strong>,<br class='break-m'>
-									<strong>공간정보엔지니어<br class='break-m'>신명호</strong> 입니다!</h2><hr>								
-								<p style="font-size : 13px";>#GISDB구축 #정밀도로지도구축 #POI구축 #수치지도제작 #지하시설물 #국가기준점설치&이전<br class='break-m'>
-								#GNSS #RTK멀티콥터드론 #MMS #지거 #지하시설물탐사기 #토털스테이션<br class='break-m'>
-								#Python #SQL #HTML #QGIS #AutoCAD #Pix4D #SketchUP #2D #3D #Photoshop #Office</p>
-							</header>
-
-							<footer>
-								<a href="#about" class="button scrolly">소개</a>
-								<a href="#portfolio" class="button scrolly">자격증</a>
-								<a href="#abset" class="button scrolly">사업소개</a>
-							</footer>
-
-						</div>
-					</section>
-
-				<!-- About Me -->
-					<section id="about" class="three">
-						<div class="container">
-
-							<header>
-								<h2>About Me</h2>
-							</header>
-
-							<a href="#" class="image featured"><img src="images/pic08.png" alt="" /></a>
-
-							<p>
-							저는 공간정보 6년차로써 측량과 관련된 국가사업, 공공기관, 민간 사업을 두루 경험해 보았습니다. 
-							다양한 측량 및 GIS DB구축 용역의 착수부터 준공까지하며, 시스템 유지보수까지.
-							이러한 경험들을 바탕으로 </style="font-weight:900;">자동화 기술과 노하우</style>를 보여 드리겠습니다.
-							</p>
-							<div class="video-container">
-								<iframe src="https://www.youtube.com/embed/kQarRwDZmxw?si=_ClggdpXl-RVbmUN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-							</div>	
-							<br class='break-m'>
-							<div class="video-container">
-								<iframe src="https://www.youtube-nocookie.com/embed/pfNGYVuxQqs?si=AHOJKgEdDIwsJ-Vk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-							</div>		
-
-						</div>
 					</section>
 
 									<!-- Portfolio -->
@@ -381,20 +446,7 @@
 								<li>데이터 통합</li>
 							</ul>
 						</div>
-					</div>
-					<hr>
-					<h2 class="alt"><strong>공간정보 시장은 다양합니다</strong></h2>
-					<p>GIS DB구축용역, 정밀도로지도구축, 수치지형도제작, 지적재조사, 3D모델링, 디지털트윈 등등...
-						<h1>맨 첫단추는, 지하시설물 DB 구축 용역입니다.</h1>
-						그 이유는, <br class='break-m'>
-						1. 사업시작이 쉽습니다<br class='break-m'>
-						2. A~Z까지 경험해보며 자동화와 노하우기술이 축적되었습니다<br class='break-m'>
-						3. 관로의 노후화교체, 신규관로매설, 보수, 도로공사 등은 꾸준히 있습니다.<br class='break-m'>
-						4. 작은 단위로 사업이 나오기 좋습니다.<br class='break-m'>
-						5. 청년창업지원과, 중소벤처기업지원, 지방소도시기업지원, 연구용역지원, 데이터베이스 및 공간정보사업 장려지원
-						따라서 사업 초기에 사업규모를 키우기 쉽습니다!<br class='break-m'>
-					</p>
-				
+					</div>				
 				</section>
 				
 
@@ -467,5 +519,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
   </script>
+  <script>
+	window.onscroll = function() {
+		var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+		var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+		var scrolled = (winScroll / height) * 100;
+		document.querySelector('.scroll-progress').style.width = scrolled + '%';
+	};
+	</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var video = document.getElementById('bgVideo');
+		if (video) {
+			video.play();
+		}
+	});
+  </script>
+  
 	</body>
 </html>
