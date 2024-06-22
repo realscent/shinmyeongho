@@ -1,0 +1,471 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>신명호 Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<link rel="stylesheet" href="styles.css">
+	<style>
+  /* CSS for section effects */
+  .section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+		@media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1200px) {
+			footer {
+				font-size: 12px;
+			}
+			#footer {
+				height: auto;
+			}
+		}
+		
+		@media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1900px) {
+			.break-m {
+			  display: block;
+			}
+		  }
+		  
+		
+		.icon.fa-kakao {
+			background: url('images/kakao.png') no-repeat center center;
+			background-size: cover;
+		}
+		.icon.fa-phon {
+			background: url('images/phon.png') no-repeat center center;
+			background-size: cover;
+		}
+		.icon.fa-mail {
+			background: url('images/kakao.png') no-repeat center center;
+			background-size: cover;
+		}
+		</style>
+		<style>
+		/* Modal (background) */
+		.modal {
+			display: none; /* Hidden by default */
+			position: fixed; /* Stay in place */
+			z-index: 1; /* Sit on top */
+			padding-top: 100px; /* Location of the box */
+			left: 0;
+			top: 0;
+			width: 100%; /* Full width */
+			height: 100%; /* Full height */
+			overflow: auto; /* Enable scroll if needed */
+			background-color: rgb(0,0,0); /* Fallback color */
+			background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+		}
+		
+		/* Modal Content (image) */
+		.modal-content {
+			margin: auto;
+			display: block;
+			width: 80%;
+			max-width: 700px;
+		}
+		
+/* Gallery Styles */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.gallery-item {
+    position: relative;
+    margin: 10px;
+    width: calc(33.333% - 20px); /* Three items per row with spacing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Centering the caption and making its size relative to the gallery item */
+.caption {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 5px; /* Optional: adds rounded corners */
+    max-width: 90%; /* Ensures the caption doesn't stretch too wide */
+    font-size: 3vw; /* Dynamic font size relative to viewport width */
+    line-height: 1.2; /* For better readability */
+    overflow-wrap: break-word; /* Ensure long words are broken */
+}
+/* Ensure caption scales down on smaller screens */
+@media screen and (max-width: 600px) {
+    .caption {
+        font-size: 2vw; /* Increase relative size for smaller screens */
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1200px) {
+    .caption {
+        font-size: 2vw; /* Intermediate size for medium screens */
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    .caption {
+        font-size: 2vw; /* Default relative size for larger screens */
+    }
+}
+
+			
+		/* Add Animation - Zoom in the Modal */
+		.modal-content, #caption { 
+			animation-name: zoom;
+			animation-duration: 0.6s;
+		}
+		
+		@keyframes zoom {
+			from {transform:scale(0)} 
+			to {transform:scale(1)}
+		}
+		
+		/* The Close Button */
+		.close {
+			position: absolute;
+			top: 15px;
+			right: 35px;
+			color: #f1f1f1;
+			font-size: 40px;
+			font-weight: bold;
+			transition: 0.3s;
+		}
+		
+		.close:hover,
+		.close:focus {
+			color: #bbb;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		/* Add this CSS for responsive video */
+		.video-container {
+			position: relative;
+			padding-bottom: 56.25%; /* 16:9 aspect ratio */
+			height: 0;
+			overflow: hidden;
+			max-width: 100%;
+			background: #00000000;
+		}
+		
+		.video-container iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.video-container video {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+.section .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px; /* 섹션 높이를 적절히 설정 */
+}
+.image.avatar50 img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+	</style>	
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
+							<h1 id="title">신명호</h1>
+							<p>Geospatial Information Engineer</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#top" id="top-link"><span class="icon solid fa-home">Intro</span></a></li>
+								<li><a href="#about" id="about-link"><span class="icon solid fa-user">About Me</span></a></li>
+								<li><a href="#portfolio" id="portfolio-link"><span class="icon solid fa-th">자격증</span></a></li>
+								<li><a href="#abset" id="abset-link"><span class="icon solid fa-envelope">사업 소개</span></a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+				<div class="bottom">
+
+					<!-- Social Icons -->
+					<ul class="icons">
+						<li><a href="#" onclick="openImageInModal('images/kakaoQR.jpg', '카카오톡 친구 추가')" class="icon brands fa-kakao"><span class="label">kakaotalk</span></a></li>
+						<li><a href="tel:010-8352-4471" onclick="openImageInModal('images/kakaoQR.jpg', '연락처 복사')" class="icon brands fa-phon"><span class="label">phonnumber</span></a></li>
+					</ul>
+					
+
+				</div>
+
+			</div>
+<!-- Modal Structure -->
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+</div>
+
+<!-- Rest of your HTML content -->
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+							<header>
+								<h2 class="alt">안녕하세요! <br class='break-m'> <strong>공간정보산업 경력 6년</strong>,<br class='break-m'>
+									<strong>공간정보엔지니어<br class='break-m'>신명호</strong> 입니다!</h2><hr>								
+								<p style="font-size : 13px";>#GISDB구축 #정밀도로지도구축 #POI구축 #수치지도제작 #지하시설물 #국가기준점설치&이전<br class='break-m'>
+								#GNSS #RTK멀티콥터드론 #MMS #지거 #지하시설물탐사기 #토털스테이션<br class='break-m'>
+								#Python #SQL #HTML #QGIS #AutoCAD #Pix4D #SketchUP #2D #3D #Photoshop #Office</p>
+							</header>
+
+							<footer>
+								<a href="#about" class="button scrolly">소개</a>
+								<a href="#portfolio" class="button scrolly">자격증</a>
+								<a href="#abset" class="button scrolly">사업소개</a>
+							</footer>
+
+						</div>
+					</section>
+
+				<!-- About Me -->
+					<section id="about" class="three">
+						<div class="container">
+
+							<header>
+								<h2>About Me</h2>
+							</header>
+
+							<a href="#" class="image featured"><img src="images/pic08.png" alt="" /></a>
+
+							<p>
+							저는 공간정보 6년차로써 측량과 관련된 국가사업, 공공기관, 민간 사업을 두루 경험해 보았습니다. 
+							다양한 측량 및 GIS DB구축 용역의 착수부터 준공까지하며, 시스템 유지보수까지.
+							이러한 경험들을 바탕으로 </style="font-weight:900;">자동화 기술과 노하우</style>를 보여 드리겠습니다.
+							</p>
+							<div class="video-container">
+								<iframe src="https://www.youtube.com/embed/kQarRwDZmxw?si=_ClggdpXl-RVbmUN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>	
+							<br class='break-m'>
+							<div class="video-container">
+								<iframe src="https://www.youtube-nocookie.com/embed/pfNGYVuxQqs?si=AHOJKgEdDIwsJ-Vk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>		
+
+						</div>
+					</section>
+
+									<!-- Portfolio -->
+									<section id="portfolio" class="two">
+										<div class="container">
+				
+											<header>
+												<h2>자격증</h2>
+											</header>
+				
+											<p> <strong>노력과, 성실함</strong><br class='break-m'>
+												저를 나타내는것은 꾸준함입니다.
+												어떠한 환경속에서도 배움의 자세를 잊지 않습니다. 
+											</p>
+				
+										    <div class="gallery">
+												<div class="gallery-item">
+													<img src="images/측량및지형공간정보기사.jpg" alt="측량및지형공간정보기사">
+													<div class="caption">측량 및<br class='break-m'>지형공간정보<br class='break-m'>기사</div>
+												</div>
+												<div class="gallery-item">
+													<img src="images/측량및지형공간정보산업기사.jpg" alt="측량및지형공간정보산업기사">
+													<div class="caption">측량 및<br class='break-m'>지형공간정보<br class='break-m'>산업기사</div>
+												</div>
+												<div class="gallery-item">
+													<img src="images/측량기능사.jpg" alt="측량기능사">
+													<div class="caption">측량기능사</div>
+												</div>
+												<div class="gallery-item">
+													<img src="images/전산응용토목제도기능사.jpg" alt="전산응용토목제도기능사">
+													<div class="caption">전산응용토목제도기능사</div>
+												</div>
+												<div class="gallery-item">
+													<img src="images/지도제작기능사.jpg" alt="지도제작기능사">
+													<div class="caption">지도제작기능사</div>
+												</div>
+												<div class="gallery-item">
+													<img src="images/건설재료시험기능사.jpg" alt="건설재료시험기능사">
+													<div class="caption">건설재료시험기능사</div>
+												</div>
+											</div>
+										
+											<div id="myModal" class="modal">
+												<span class="close">&times;</span>
+												<img class="modal-content" id="img01">
+												<div id="caption"></div>
+											</div>
+										
+											<script src="script.js"></script>
+									</section>
+				
+				<!-- 사업 소개 -->
+				<section id="abset" class="four">
+					<div class="container">
+				
+						<header>
+							<h2>사업 소개</h2>
+						</header>
+				
+						<div class="section">
+							<div class="image-container">
+								<span class="image avatar49"><img src="images/1.png" alt="사업 개요 이미지"></span>
+							</div>
+						</div>
+				
+						<div class="section">
+							<div class="image-container">
+								<span class="image avatar50"><img src="images/2.png" alt="운용장비 기술 간략"></span>
+							</div>
+						</div>
+				
+						<div class="section">
+							<div class="image-container">
+								<span class="image avatar51"><img src="images/3.png" alt="사업의 필요성 이미지"></span>
+							</div>
+						</div>
+				
+						<div class="section">
+							<h2>기대 효과</h2>
+							<div class="image-container">
+								<span class="image avatar52"><img src="images/기대효과.png" alt="기대 효과 이미지"></span>
+							</div>
+							<ul>
+								<li>경제적 절감</li>
+								<li>안전한 도시 환경</li>
+								<li>데이터 통합</li>
+							</ul>
+						</div>
+					</div>
+					<hr>
+					<h2 class="alt"><strong>공간정보 시장은 다양합니다</strong></h2>
+					<p>GIS DB구축용역, 정밀도로지도구축, 수치지형도제작, 지적재조사, 3D모델링, 디지털트윈 등등...
+						<h1>맨 첫단추는, 지하시설물 DB 구축 용역입니다.</h1>
+						그 이유는, <br class='break-m'>
+						1. 사업시작이 쉽습니다<br class='break-m'>
+						2. A~Z까지 경험해보며 자동화와 노하우기술이 축적되었습니다<br class='break-m'>
+						3. 관로의 노후화교체, 신규관로매설, 보수, 도로공사 등은 꾸준히 있습니다.<br class='break-m'>
+						4. 작은 단위로 사업이 나오기 좋습니다.<br class='break-m'>
+						5. 청년창업지원과, 중소벤처기업지원, 지방소도시기업지원, 연구용역지원, 데이터베이스 및 공간정보사업 장려지원
+						따라서 사업 초기에 사업규모를 키우기 쉽습니다!<br class='break-m'>
+					</p>
+				
+				</section>
+				
+
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+			
+					<ul class="신명호 : 010-8352-4471">
+						<li>&copy; 신명호 : 010-8352-4471</li><li>email: <a href="scent7942@gmail.com">scent7942@gmail.com</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+			<!-- 카카오톡큐알뜨는스크립트 -->
+			<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var modalImg = document.getElementById("modalImage");
+var captionText = document.getElementById("caption");
+
+function openImageInModal(imageUrl, title) {
+    modal.style.display = "block";
+    modalImg.src = imageUrl;
+    captionText.innerHTML = title;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+
+			</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var sections = document.querySelectorAll('#abset .section');
+    var options = {
+        rootMargin: '0px 0px -50% 0px',  // 화면의 50%가 지나면 트리거
+        threshold: 0.1
+    };
+
+    var observer = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    sections.forEach(function (section) {
+        observer.observe(section);
+    });
+});
+
+  </script>
+	</body>
+</html>
