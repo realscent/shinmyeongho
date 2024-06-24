@@ -13,13 +13,25 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #f0f0f0b7;
             flex-direction: column;
             gap: 20px;
+            position: relative;
+            overflow: hidden; /* Added to prevent scrollbars */
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Place the video behind other content */
         }
 
         button {
-            background-color: #007BFF;
+            background-color: #007bff7c;
             color: white;
             padding: 15px 30px;
             font-size: 1.2em;
@@ -39,6 +51,12 @@
             transform: scale(0.95);
         }
 
+        @media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1900px) {
+            .break-m {
+                display: block;
+            }
+        }
+
         @media (max-width: 600px) {
             button {
                 padding: 10px 20px;
@@ -46,7 +64,7 @@
             }
         }
 
-        .modal {
+        .modal-certificate {
             display: none;
             position: fixed;
             z-index: 1;
@@ -60,7 +78,7 @@
             align-items: center;
         }
 
-        .modal-content {
+        .modal-content-certificate {
             margin: auto;
             display: block;
             max-width: 90%;
@@ -69,9 +87,52 @@
             height: auto;
         }
 
-        .modal iframe {
+        .modal-video {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content-video {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             width: 90%;
             height: 90%;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 0;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
         }
 
         .close {
@@ -126,105 +187,148 @@
             font-size: 18px;
             font-weight: bold;
         }
+
+        #backButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #backButton:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        #backButton:active {
+            background-color: #bd2130;
+            transform: scale(0.95);
+        }
     </style>
+    <script>
+        function goBack() {
+            window.location.href = "https://realscent.github.io/shinmyeongho/portfolio";
+        }
+
+        function loadVideo(url) {
+            document.getElementById("modalVideo").src = url;
+        }
+    </script>
 </head>
 <body>
 
-<button id="openModalBtn">경력증명서열람</button>
-<button id="openVideoModalBtn">소개영상</button>
+    <video autoplay muted loop class="background-video">
+        <source src="../images/top.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-<!-- Image Modal -->
-<div id="myModal" class="modal">
-    <span class="close">&times;</span>
-    <div class="modal-header">
-        <h2 id="modalTitle">page</h2>
+    <button id="backButton" onclick="goBack()">돌아가기</button>
+    <button id="openVideoModalBtn">영상제작물 시청</button>
+    <button id="openModalBtn">경력증명서열람</button>
+
+    <!-- Certificate Modal -->
+    <div id="certificateModal" class="modal-certificate">
+        <span class="close">&times;</span>
+        <div class="modal-header">
+            <h2 id="modalTitle">page</h2>
+        </div>
+        <img class="modal-content-certificate" id="modalImage">
+        <div class="page-number" id="pageNumber"></div>
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
     </div>
-    <img class="modal-content" id="modalImage">
-    <div class="page-number" id="pageNumber"></div>
-    <a class="prev">&#10094;</a>
-    <a class="next">&#10095;</a>
-</div>
 
-<!-- Video Modal -->
-<div id="videoModal" class="modal">
-    <span class="close">&times;</span>
-    <iframe class="modal-content" id="modalVideo" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal-video">
+        <span class="close">&times;</span>
+        <div class="modal-content-video">
+            <div class="video-container">
+                <iframe id="modalVideo" src="https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-buttons">
+                <button onclick="loadVideo('https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3')">영상 1</button>
+                <button onclick="loadVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=_ClggdpXl-RVbmUN')">영상 2</button>
+            </div>
+        </div>
+    </div>
 
-<script>
-    let modal = document.getElementById("myModal");
-    let videoModal = document.getElementById("videoModal");
-    let modalImg = document.getElementById("modalImage");
-    let modalTitle = document.getElementById("modalTitle");
-    let pageNumber = document.getElementById("pageNumber");
-    let closeBtns = document.querySelectorAll(".close");
-    let currentIndex = 0;
-    const images = ["1.png", "2.png", "3.png", "4.png", "5.png"];
-    const videoSrc = "https://youtu.be/kVcxlHBy4-Q?si=kSFEv5m8rWJw9WNC";
+    <script>
+        let certificateModal = document.getElementById("certificateModal");
+        let videoModal = document.getElementById("videoModal");
+        let modalImg = document.getElementById("modalImage");
+        let modalTitle = document.getElementById("modalTitle");
+        let pageNumber = document.getElementById("pageNumber");
+        let closeBtns = document.querySelectorAll(".close");
+        let currentIndex = 0;
+        const images = ["1.png", "2.png", "3.png", "4.png", "5.png"];
 
-    function updateModalContent(index) {
-        modalImg.src = images[index];
-        pageNumber.textContent = `Page ${index + 1} of ${images.length}`;
-    }
-
-    document.getElementById("openModalBtn").addEventListener("click", function() {
-        modal.style.display = "flex";
-        modalTitle.innerText = "page";
-        currentIndex = 0; // Reset current index to the first image
-        updateModalContent(currentIndex);
-    });
-
-    document.getElementById("openVideoModalBtn").addEventListener("click", function() {
-        videoModal.style.display = "flex";
-        document.getElementById("modalVideo").src = videoSrc;
-    });
-
-    closeBtns.forEach(btn => {
-        btn.onclick = function() {
-            modal.style.display = "none";
-            videoModal.style.display = "none";
-            document.getElementById("modalVideo").src = ""; // Stop the video
-        };
-    });
-
-    document.querySelector(".prev").onclick = function() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateModalContent(currentIndex);
-    };
-
-    document.querySelector(".next").onclick = function() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateModalContent(currentIndex);
-    };
-
-    // Close the modal if the user clicks outside of the modal content
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        } else if (event.target == videoModal) {
-            videoModal.style.display = "none";
-            document.getElementById("modalVideo").src = ""; // Stop the video
+        function updateModalContent(index) {
+            modalImg.src = images[index];
+            pageNumber.textContent = `Page ${index + 1} of ${images.length}`;
         }
-    };
 
-    // Swipe support for mobile devices
-    let startX = 0;
-
-    modalImg.addEventListener('touchstart', (event) => {
-        startX = event.touches[0].clientX;
-    });
-
-    modalImg.addEventListener('touchend', (event) => {
-        let endX = event.changedTouches[0].clientX;
-        if (startX - endX > 50) {
-            currentIndex = (currentIndex + 1) % images.length;
+        document.getElementById("openModalBtn").addEventListener("click", function() {
+            certificateModal.style.display = "flex";
+            modalTitle.innerText = "page";
+            currentIndex = 0;
             updateModalContent(currentIndex);
-        } else if (endX - startX > 50) {
+        });
+
+        document.getElementById("openVideoModalBtn").addEventListener("click", function() {
+            videoModal.style.display = "flex";
+            loadVideo('https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3');
+        });
+
+        closeBtns.forEach(btn => {
+            btn.onclick = function() {
+                certificateModal.style.display = "none";
+                videoModal.style.display = "none";
+                document.getElementById("modalVideo").src = "";
+            };
+        });
+
+        document.querySelector(".prev").onclick = function() {
             currentIndex = (currentIndex - 1 + images.length) % images.length;
             updateModalContent(currentIndex);
-        }
-    });
-</script>
+        };
 
+        document.querySelector(".next").onclick = function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateModalContent(currentIndex);
+        };
+
+        window.onclick = function(event) {
+            if (event.target == certificateModal) {
+                certificateModal.style.display = "none";
+            } else if (event.target == videoModal) {
+                videoModal.style.display = "none";
+                document.getElementById("modalVideo").src = "";
+            }
+        };
+
+        let startX = 0;
+
+        modalImg.addEventListener('touchstart', (event) => {
+            startX = event.touches[0].clientX;
+        });
+
+        modalImg.addEventListener('touchend', (event) => {
+            let endX = event.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateModalContent(currentIndex);
+            } else if (endX - startX > 50) {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateModalContent(currentIndex);
+            }
+        });
+    </script>
 </body>
 </html>
