@@ -19,7 +19,29 @@
             position: relative;
             overflow: hidden; /* Added to prevent scrollbars */
         }
-
+        .contact-info {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .contact-info a {
+            color: #ffcc00; /* Email link color */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-info a:hover {
+            color: #ffffff; /* Change color on hover */
+        }
+        
         .background-video {
             position: fixed;
             top: 0;
@@ -64,7 +86,7 @@
             }
         }
 
-        .modal-certificate, .modal-license {
+        .modal-certificate, .modal-license, .modal-chart {
             display: none;
             position: fixed;
             z-index: 1;
@@ -73,7 +95,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.637);
             justify-content: center;
             align-items: center;
         }
@@ -88,13 +110,14 @@
             padding: 20px;
             box-sizing: border-box;
             position: relative;
+            z-index: 1; /* Lower than the close button */
         }
         
         .modal-header {
             display: none;
         }
         
-        .modal-content-certificate, .modal-content-license {
+        .modal-content-certificate, .modal-content-license, .modal-content-chart {
             max-width: 80%;
             max-height: 70%;
             margin-bottom: 20px;
@@ -157,6 +180,7 @@
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
+            z-index: 10; /* Ensure close button is on top */
         }
 
         .close:hover,
@@ -232,7 +256,7 @@
 
         @media all and (max-width: 1024px) {
             /* 일반버전(2) - PC작은창, 태블릿 */
-            .modal-content-certificate, .modal-content-license {
+            .modal-content-certificate, .modal-content-license, .modal-content-chart {
                 max-width: 80%;
                 max-height: 80%;
             }
@@ -240,7 +264,7 @@
 
         @media all and (max-width: 767px) {
             /* 모바일버전(1) - 일반 스마트폰 */
-            .modal-content-certificate, .modal-content-license {
+            .modal-content-certificate, .modal-content-license, .modal-content-chart {
                 max-width: 90%;
                 max-height: 90%;
             }
@@ -248,7 +272,7 @@
 
         @media all and (max-width: 280px) {
             /* 모바일버전(2) - 갤럭시 플립 */
-            .modal-content-certificate, .modal-content-license {
+            .modal-content-certificate, .modal-content-license, .modal-content-chart {
                 max-width: 95%;
                 max-height: 95%;
             }
@@ -287,8 +311,15 @@
 
     <button id="backButton" onclick="goBack()">돌아가기</button>
     <button id="openVideoModalBtn">영상제작물 시청</button>
-    <button id="openModalBtn">경력증명서열람</button>
-    <button id="openLicenseModalBtn">자격증열람</button>
+    <button id="openModalBtn">경력증명서 열람</button>
+    <button id="openLicenseModalBtn">자격증 열람</button>
+    <button id="openChartModalBtn">역량차트 열람</button>
+
+    <div class="contact-info">
+        Name : 신명호<br>
+        eMail : <a href="mailto:scent7942@gmail.com">scent7942@gmail.com</a><br>
+        Tel : 010-8352-4471
+    </div>
 
     <!-- Certificate Modal -->
     <div id="certificateModal" class="modal-certificate">
@@ -311,6 +342,17 @@
             <a class="next license-next">&#10095;</a>
         </div>
     </div>
+
+        <!-- Chart Modal -->
+        <div id="chartModal" class="modal-chart">
+            <span class="close">&times;</span>
+            <div class="modal-content-container">
+                <img class="modal-content-chart" id="chartModalImage">
+                <div class="page-number" id="chartPageNumber"></div>
+                <a class="prev chart-prev">&#10094;</a>
+                <a class="next chart-next">&#10095;</a>
+            </div>
+        </div>
 
     <!-- Video Modal -->
     <div id="videoModal" class="modal-video">
@@ -409,6 +451,45 @@
             loadLicenseImage(licenseIndex);
         }
 
+          // chart Modal Logic
+          var chartModal = document.getElementById('chartModal');
+          var chartBtn = document.getElementById('openChartModalBtn');
+          var chartSpan = chartModal.getElementsByClassName('close')[0];
+          var chartImages = [
+              "../images/능률분포.png",
+              "../images/능률차트.png",
+              "../images/사용프로그램.png",
+              "../images/2.png"
+          ];
+          var chartIndex = 0;
+  
+          chartBtn.onclick = function() {
+              chartModal.style.display = "flex";
+              loadchartImage(chartIndex);
+          }
+  
+          chartSpan.onclick = function() {
+              chartModal.style.display = "none";
+          }
+  
+          function loadchartImage(index) {
+              document.getElementById('chartModalImage').src = chartImages[index];
+              document.getElementById('chartPageNumber').innerText = `Page ${index + 1} of ${chartImages.length}`;
+          }
+  
+          var chartPrevBtn = chartModal.getElementsByClassName('prev chart-prev')[0];
+          var chartNextBtn = chartModal.getElementsByClassName('next chart-next')[0];
+  
+          chartPrevBtn.onclick = function() {
+              chartIndex = (chartIndex - 1 + chartImages.length) % chartImages.length;
+              loadchartImage(chartIndex);
+          }
+  
+          chartNextBtn.onclick = function() {
+              chartIndex = (chartIndex + 1) % chartImages.length;
+              loadchartImage(chartIndex);
+          }
+
         // Video Modal Logic
         var videoModal = document.getElementById('videoModal');
         var videoBtn = document.getElementById('openVideoModalBtn');
@@ -432,6 +513,9 @@
             if (event.target == licenseModal) {
                 licenseModal.style.display = "none";
             }
+        }
+        if (event.target == chartModal) {
+            chartModal.style.display = "none";
         }
     </script>
 </body>
