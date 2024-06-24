@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Modal Gallery</title>
-    <style>
+        <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -210,6 +210,38 @@
         #backButton:active {
             background-color: #bd2130;
             transform: scale(0.95);
+        }
+
+        @media all and (max-width: 1024px) {
+            /* 일반버전(2) - PC작은창, 태블릿 */
+            .modal-content-certificate {
+                max-width: 80%;
+                max-height: 80%;
+            }
+        }
+
+        @media all and (max-width: 767px) {
+            /* 모바일버전(1) - 일반 스마트폰 */
+            .modal-content-certificate {
+                max-width: 90%;
+                max-height: 90%;
+            }
+        }
+
+        @media all and (max-width: 280px) {
+            /* 모바일버전(2) - 갤럭시 플립 */
+            .modal-content-certificate {
+                max-width: 95%;
+                max-height: 95%;
+            }
+
+            .page-number {
+                font-size: 14px;
+            }
+
+            .close {
+                font-size: 30px;
+            }
         }
     </style>
     <script>
