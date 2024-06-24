@@ -64,7 +64,7 @@
             }
         }
 
-        .modal-certificate {
+        .modal-certificate, .modal-license {
             display: none;
             position: fixed;
             z-index: 1;
@@ -78,7 +78,7 @@
             align-items: center;
         }
 
-        .modal-content-certificate {
+        .modal-content-certificate, .modal-content-license {
             margin: auto;
             display: block;
             max-width: 90%;
@@ -214,7 +214,7 @@
 
         @media all and (max-width: 1024px) {
             /* 일반버전(2) - PC작은창, 태블릿 */
-            .modal-content-certificate {
+            .modal-content-certificate, .modal-content-license {
                 max-width: 80%;
                 max-height: 80%;
             }
@@ -222,7 +222,7 @@
 
         @media all and (max-width: 767px) {
             /* 모바일버전(1) - 일반 스마트폰 */
-            .modal-content-certificate {
+            .modal-content-certificate, .modal-content-license {
                 max-width: 90%;
                 max-height: 90%;
             }
@@ -230,7 +230,7 @@
 
         @media all and (max-width: 280px) {
             /* 모바일버전(2) - 갤럭시 플립 */
-            .modal-content-certificate {
+            .modal-content-certificate, .modal-content-license {
                 max-width: 95%;
                 max-height: 95%;
             }
@@ -263,8 +263,8 @@
 
     <button id="backButton" onclick="goBack()">돌아가기</button>
     <button id="openVideoModalBtn">영상제작물 시청</button>
-    <button id="openModalBtn">경력증명서 열람</button>
-    <button id="openModalBtn">자격증 열람</button>
+    <button id="openModalBtn">경력증명서열람</button>
+    <button id="openLicenseModalBtn">자격증열람</button>
 
     <!-- Certificate Modal -->
     <div id="certificateModal" class="modal-certificate">
@@ -278,6 +278,18 @@
         <a class="next">&#10095;</a>
     </div>
 
+    <!-- License Modal -->
+    <div id="licenseModal" class="modal-license">
+        <span class="close">&times;</span>
+        <div class="modal-header">
+            <h2 id="licenseModalTitle">page</h2>
+        </div>
+        <img class="modal-content-license" id="licenseModalImage">
+        <div class="page-number" id="licensePageNumber"></div>
+        <a class="prev license-prev">&#10094;</a>
+        <a class="next license-next">&#10095;</a>
+    </div>
+
     <!-- Video Modal -->
     <div id="videoModal" class="modal-video">
         <span class="close">&times;</span>
@@ -286,82 +298,119 @@
                 <iframe id="modalVideo" src="https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="video-buttons">
-                <button onclick="loadVideo('https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3')">영상 1</button>
-                <button onclick="loadVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=_ClggdpXl-RVbmUN')">영상 2</button>
+                <button onclick="loadVideo('https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3')">Video 1</button>
+                <button onclick="loadVideo('https://www.youtube.com/embed/another_video_url')">Video 2</button>
             </div>
         </div>
     </div>
 
     <script>
-        let certificateModal = document.getElementById("certificateModal");
-        let videoModal = document.getElementById("videoModal");
-        let modalImg = document.getElementById("modalImage");
-        let modalTitle = document.getElementById("modalTitle");
-        let pageNumber = document.getElementById("pageNumber");
-        let closeBtns = document.querySelectorAll(".close");
-        let currentIndex = 0;
-        const images = ["1.png", "2.png", "3.png", "4.png", "5.png"];
+        // Certificate Modal Logic
+        var certificateModal = document.getElementById('certificateModal');
+        var certificateBtn = document.getElementById('openModalBtn');
+        var certificateSpan = certificateModal.getElementsByClassName('close')[0];
+        var certificateImages = [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
+        ];
+        var certificateIndex = 0;
 
-        function updateModalContent(index) {
-            modalImg.src = images[index];
-            pageNumber.textContent = `Page ${index + 1} of ${images.length}`;
+        certificateBtn.onclick = function() {
+            certificateModal.style.display = "flex";
+            loadCertificateImage(certificateIndex);
         }
 
-        document.getElementById("openModalBtn").addEventListener("click", function() {
-            certificateModal.style.display = "flex";
-            modalTitle.innerText = "page";
-            currentIndex = 0;
-            updateModalContent(currentIndex);
-        });
+        certificateSpan.onclick = function() {
+            certificateModal.style.display = "none";
+        }
 
-        document.getElementById("openVideoModalBtn").addEventListener("click", function() {
+        function loadCertificateImage(index) {
+            document.getElementById('modalImage').src = certificateImages[index];
+            document.getElementById('pageNumber').innerText = `Page ${index + 1} of ${certificateImages.length}`;
+        }
+
+        var prevBtn = certificateModal.getElementsByClassName('prev')[0];
+        var nextBtn = certificateModal.getElementsByClassName('next')[0];
+
+        prevBtn.onclick = function() {
+            certificateIndex = (certificateIndex - 1 + certificateImages.length) % certificateImages.length;
+            loadCertificateImage(certificateIndex);
+        }
+
+        nextBtn.onclick = function() {
+            certificateIndex = (certificateIndex + 1) % certificateImages.length;
+            loadCertificateImage(certificateIndex);
+        }
+
+        // License Modal Logic
+        var licenseModal = document.getElementById('licenseModal');
+        var licenseBtn = document.getElementById('openLicenseModalBtn');
+        var licenseSpan = licenseModal.getElementsByClassName('close')[0];
+        var licenseImages = [
+            "../images/측량및지형공간정보기사.jpg",
+            "../images/측량및지형공간정보산업기사.jpg",
+            "../images/측량기능사.jpg",
+            "../images/지도제작기능사.jpg",
+            "../images/전산응용토목제도기능사.jpg",
+            "../images/건설재료시험기능사.jpg",
+            "../images/정보처리기사필기합격.jpg"
+        ];
+        var licenseIndex = 0;
+
+        licenseBtn.onclick = function() {
+            licenseModal.style.display = "flex";
+            loadLicenseImage(licenseIndex);
+        }
+
+        licenseSpan.onclick = function() {
+            licenseModal.style.display = "none";
+        }
+
+        function loadLicenseImage(index) {
+            document.getElementById('licenseModalImage').src = licenseImages[index];
+            document.getElementById('licensePageNumber').innerText = `Page ${index + 1} of ${licenseImages.length}`;
+        }
+
+        var licensePrevBtn = licenseModal.getElementsByClassName('prev license-prev')[0];
+        var licenseNextBtn = licenseModal.getElementsByClassName('next license-next')[0];
+
+        licensePrevBtn.onclick = function() {
+            licenseIndex = (licenseIndex - 1 + licenseImages.length) % licenseImages.length;
+            loadLicenseImage(licenseIndex);
+        }
+
+        licenseNextBtn.onclick = function() {
+            licenseIndex = (licenseIndex + 1) % licenseImages.length;
+            loadLicenseImage(licenseIndex);
+        }
+
+        // Video Modal Logic
+        var videoModal = document.getElementById('videoModal');
+        var videoBtn = document.getElementById('openVideoModalBtn');
+        var videoSpan = videoModal.getElementsByClassName('close')[0];
+
+        videoBtn.onclick = function() {
             videoModal.style.display = "flex";
-            loadVideo('https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3');
-        });
+        }
 
-        closeBtns.forEach(btn => {
-            btn.onclick = function() {
-                certificateModal.style.display = "none";
-                videoModal.style.display = "none";
-                document.getElementById("modalVideo").src = "";
-            };
-        });
-
-        document.querySelector(".prev").onclick = function() {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateModalContent(currentIndex);
-        };
-
-        document.querySelector(".next").onclick = function() {
-            currentIndex = (currentIndex + 1) % images.length;
-            updateModalContent(currentIndex);
-        };
+        videoSpan.onclick = function() {
+            videoModal.style.display = "none";
+        }
 
         window.onclick = function(event) {
             if (event.target == certificateModal) {
                 certificateModal.style.display = "none";
-            } else if (event.target == videoModal) {
+            }
+            if (event.target == videoModal) {
                 videoModal.style.display = "none";
-                document.getElementById("modalVideo").src = "";
             }
-        };
-
-        let startX = 0;
-
-        modalImg.addEventListener('touchstart', (event) => {
-            startX = event.touches[0].clientX;
-        });
-
-        modalImg.addEventListener('touchend', (event) => {
-            let endX = event.changedTouches[0].clientX;
-            if (startX - endX > 50) {
-                currentIndex = (currentIndex + 1) % images.length;
-                updateModalContent(currentIndex);
-            } else if (endX - startX > 50) {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                updateModalContent(currentIndex);
+            if (event.target == licenseModal) {
+                licenseModal.style.display = "none";
             }
-        });
+        }
     </script>
 </body>
 </html>
