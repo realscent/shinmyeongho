@@ -51,7 +51,6 @@
             object-fit: cover;
             z-index: -1; /* Place the video behind other content */
         }
-
         button {
             background-color: #007bff7c;
             color: white;
@@ -62,30 +61,25 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
-
         button:hover {
             background-color: #0056b3;
             transform: scale(1.05);
         }
-
         button:active {
             background-color: #004080;
             transform: scale(0.95);
         }
-
         @media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1900px) {
             .break-m {
                 display: block;
             }
         }
-
         @media (max-width: 600px) {
             button {
                 padding: 10px 20px;
                 font-size: 1em;
             }
         }
-
         .modal-certificate, .modal-license, .modal-chart {
             display: none;
             position: fixed;
@@ -99,7 +93,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .modal-content-container {
             display: flex;
             flex-direction: column;
@@ -110,20 +103,25 @@
             padding: 20px;
             box-sizing: border-box;
             position: relative;
-            z-index: 1; /* Lower than the close button */
+            z-index: 1;
+        }
+        
+        .modal-content-certificate, .modal-content-license, .modal-content-chart {
+            background-color: rgba(202, 198, 198, 0.623); /* 이미지 크기에 맞는 배경 */
+            padding: 10px;
+            border-radius: 10px; /* 모서리를 둥글게 */
         }
         
         .modal-header {
             display: none;
         }
         
-        .modal-content-certificate, .modal-content-license, .modal-content-chart {
+        <!-- .modal-content-certificate, .modal-content-license, .modal-content-chart {
             max-width: 80%;
             max-height: 70%;
             margin-bottom: 20px;
             object-fit: contain;
-        }
-
+        } -->
         .modal-video {
             display: none;
             position: fixed;
@@ -137,7 +135,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .modal-content-video {
             display: flex;
             flex-direction: column;
@@ -148,14 +145,12 @@
             max-width: 80%;
             max-height: 80%;
         }
-
         .video-container {
             width: 100%;
             height: 0;
             padding-top: 56.25%; /* 16:9 Aspect Ratio */
             position: relative;
         }
-
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -164,14 +159,12 @@
             height: 100%;
             object-fit: contain;
         }
-
         .video-buttons {
             display: flex;
             gap: 10px;
             justify-content: center;
             margin-top: 10px;
         }
-
         .close {
             position: absolute;
             top: 15px;
@@ -182,14 +175,12 @@
             transition: 0.3s;
             z-index: 10; /* Ensure close button is on top */
         }
-
         .close:hover,
         .close:focus {
             color: #bbb;
             text-decoration: none;
             cursor: pointer;
         }
-
         .prev, .next {
             cursor: pointer;
             position: absolute;
@@ -203,19 +194,15 @@
             transition: 0.6s ease;
             user-select: none;
         }
-
         .prev {
             left: 0;
         }
-
         .next {
             right: 0;
         }
-
         .prev:hover, .next:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
-
         .page-number {
             position: absolute;
             bottom: 20px;
@@ -229,7 +216,6 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-
         #backButton {
             position: absolute;
             top: 10px;
@@ -243,17 +229,14 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
-
         #backButton:hover {
             background-color: #c82333;
             transform: scale(1.05);
         }
-
         #backButton:active {
             background-color: #bd2130;
             transform: scale(0.95);
         }
-
         @media all and (max-width: 1024px) {
             /* 일반버전(2) - PC작은창, 태블릿 */
             .modal-content-certificate, .modal-content-license, .modal-content-chart {
@@ -261,7 +244,6 @@
                 max-height: 80%;
             }
         }
-
         @media all and (max-width: 767px) {
             /* 모바일버전(1) - 일반 스마트폰 */
             .modal-content-certificate, .modal-content-license, .modal-content-chart {
@@ -269,18 +251,15 @@
                 max-height: 90%;
             }
         }
-
         @media all and (max-width: 280px) {
             /* 모바일버전(2) - 갤럭시 플립 */
             .modal-content-certificate, .modal-content-license, .modal-content-chart {
                 max-width: 95%;
                 max-height: 95%;
             }
-
             .page-number {
                 font-size: 14px;
             }
-
             .close {
                 position: absolute;
                 top: 10px;
@@ -296,31 +275,26 @@
         function goBack() {
             window.location.href = "https://realscent.github.io/shinmyeongho/portfolio";
         }
-
         function loadVideo(url) {
             document.getElementById("modalVideo").src = url;
         }
     </script>
 </head>
 <body>
-
     <video autoplay muted loop class="background-video">
         <source src="../images/top.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-
     <button id="backButton" onclick="goBack()">돌아가기</button>
     <button id="openVideoModalBtn">영상제작물 시청</button>
     <button id="openModalBtn">경력증명서 열람</button>
     <button id="openLicenseModalBtn">자격증 열람</button>
     <button id="openChartModalBtn">역량차트 열람</button>
-
     <div class="contact-info">
         Name : 신명호<br>
         eMail : <a href="mailto:scent7942@gmail.com">scent7942@gmail.com</a><br>
         Tel : <a href="tel:010-8352-4471">010-8352-4471</a>
     </div>
-
     <!-- Certificate Modal -->
     <div id="certificateModal" class="modal-certificate">
         <span class="close">&times;</span>
@@ -342,7 +316,6 @@
             <a class="next license-next">&#10095;</a>
         </div>
     </div>
-
         <!-- Chart Modal -->
         <div id="chartModal" class="modal-chart">
             <span class="close">&times;</span>
@@ -353,7 +326,6 @@
                 <a class="next chart-next">&#10095;</a>
             </div>
         </div>
-
     <!-- Video Modal -->
     <div id="videoModal" class="modal-video">
         <span class="close">&times;</span>
@@ -374,83 +346,70 @@
         var certificateBtn = document.getElementById('openModalBtn');
         var certificateSpan = certificateModal.getElementsByClassName('close')[0];
         var certificateImages = [
-            "1.png",
-            "2.png",
-            "3.png",
-            "4.png",
-            "5.png"
+            "../images/Career/1.png",
+            "../images/Career/2.png",
+            "../images/Career/3.png",
+            "../images/Career/4.png",
+            "../images/Career/5.png"
         ];
         var certificateIndex = 0;
-
         certificateBtn.onclick = function() {
             certificateModal.style.display = "flex";
             loadCertificateImage(certificateIndex);
         }
-
         certificateSpan.onclick = function() {
             certificateModal.style.display = "none";
         }
-
         function loadCertificateImage(index) {
             document.getElementById('modalImage').src = certificateImages[index];
             document.getElementById('pageNumber').innerText = `Page ${index + 1} of ${certificateImages.length}`;
         }
-
         var prevBtn = certificateModal.getElementsByClassName('prev')[0];
         var nextBtn = certificateModal.getElementsByClassName('next')[0];
-
         prevBtn.onclick = function() {
             certificateIndex = (certificateIndex - 1 + certificateImages.length) % certificateImages.length;
             loadCertificateImage(certificateIndex);
         }
-
         nextBtn.onclick = function() {
             certificateIndex = (certificateIndex + 1) % certificateImages.length;
             loadCertificateImage(certificateIndex);
         }
-
         // License Modal Logic
         var licenseModal = document.getElementById('licenseModal');
         var licenseBtn = document.getElementById('openLicenseModalBtn');
         var licenseSpan = licenseModal.getElementsByClassName('close')[0];
         var licenseImages = [
-            "../images/측량및지형공간정보기사.jpg",
-            "../images/측량및지형공간정보산업기사.jpg",
-            "../images/측량기능사.jpg",
-            "../images/지도제작기능사.jpg",
-            "../images/전산응용토목제도기능사.jpg",
-            "../images/건설재료시험기능사.jpg",
-            "../images/정보처리기사필기합격.jpg"
+            "../images/Certificate/측량및지형공간정보기사.jpg",
+            "../images/Certificate/측량및지형공간정보산업기사.jpg",
+            "../images/Certificate/측량기능사.jpg",
+            "../images/Certificate/지도제작기능사.jpg",
+            "../images/Certificate/전산응용토목제도기능사.jpg",
+            "../images/Certificate/건설재료시험기능사.jpg",
+            "../images/Certificate/항공사진기능사.jpg",
+            "../images/Certificate/ITQ자격증.jpg"
         ];
         var licenseIndex = 0;
-
         licenseBtn.onclick = function() {
             licenseModal.style.display = "flex";
             loadLicenseImage(licenseIndex);
         }
-
         licenseSpan.onclick = function() {
             licenseModal.style.display = "none";
         }
-
         function loadLicenseImage(index) {
             document.getElementById('licenseModalImage').src = licenseImages[index];
             document.getElementById('licensePageNumber').innerText = `Page ${index + 1} of ${licenseImages.length}`;
         }
-
         var licensePrevBtn = licenseModal.getElementsByClassName('prev license-prev')[0];
         var licenseNextBtn = licenseModal.getElementsByClassName('next license-next')[0];
-
         licensePrevBtn.onclick = function() {
             licenseIndex = (licenseIndex - 1 + licenseImages.length) % licenseImages.length;
             loadLicenseImage(licenseIndex);
         }
-
         licenseNextBtn.onclick = function() {
             licenseIndex = (licenseIndex + 1) % licenseImages.length;
             loadLicenseImage(licenseIndex);
         }
-
           // chart Modal Logic
           var chartModal = document.getElementById('chartModal');
           var chartBtn = document.getElementById('openChartModalBtn');
@@ -479,44 +438,3 @@
   
           var chartPrevBtn = chartModal.getElementsByClassName('prev chart-prev')[0];
           var chartNextBtn = chartModal.getElementsByClassName('next chart-next')[0];
-  
-          chartPrevBtn.onclick = function() {
-              chartIndex = (chartIndex - 1 + chartImages.length) % chartImages.length;
-              loadchartImage(chartIndex);
-          }
-  
-          chartNextBtn.onclick = function() {
-              chartIndex = (chartIndex + 1) % chartImages.length;
-              loadchartImage(chartIndex);
-          }
-
-        // Video Modal Logic
-        var videoModal = document.getElementById('videoModal');
-        var videoBtn = document.getElementById('openVideoModalBtn');
-        var videoSpan = videoModal.getElementsByClassName('close')[0];
-
-        videoBtn.onclick = function() {
-            videoModal.style.display = "flex";
-        }
-
-        videoSpan.onclick = function() {
-            videoModal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == certificateModal) {
-                certificateModal.style.display = "none";
-            }
-            if (event.target == videoModal) {
-                videoModal.style.display = "none";
-            }
-            if (event.target == licenseModal) {
-                licenseModal.style.display = "none";
-            }
-        }
-        if (event.target == chartModal) {
-            chartModal.style.display = "none";
-        }
-    </script>
-</body>
-</html>
