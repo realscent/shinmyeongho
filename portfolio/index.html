@@ -1,570 +1,530 @@
-<!DOCTYPE HTML>
-<!--
-	Prologue by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>신명호 Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="icon" href="images/토털.png"/>
-		<link rel="apple-touch-icon" href="images/토털.png"/>
-	</head>
-	<link rel="stylesheet" href="styles.css">
-	<style>
-/* Video Background */
-.video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Modal Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0b7;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            overflow: hidden; /* Added to prevent scrollbars */
+        }
+        .contact-info {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .contact-info a {
+            color: #ffcc00; /* Email link color */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-info a:hover {
+            color: #ffffff; /* Change color on hover */
+        }
+        
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Place the video behind other content */
+        }
 
-.video-background video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    filter: brightness(50%); /* Dim the video for a muted effect */
-}
-#top .container,
-    #top .container header,
-    #top .container header h2,
-    #top .container header p,
-	#top .container header strong,
-    #top .container footer a {
-        color: #fff !important; /* Set text color to white */
-    }
+        button {
+            background-color: #007bff7c;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
 
-    #top .container footer a.button {
-        background-color: #3498db; /* Optional: Button background color */
-        border: none; /* Remove any border */
-        color: #fff; /* Button text color */
-    }
-/* Ensure container content is above the video */
-#top .container {
-    position: relative;
-    z-index: 0; /* Keep text above everything else */
-    color: #fff; /* Text color for contrast */
-}
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
 
-/* Keep other styles for #top */
-#top {
-    position: relative;
-    overflow: hidden;
-    height: 100vh; /* Full height for cover effect */
-}
-	  
-		/* Other CSS from previous sections */
-		.section {
-			opacity: 0;
-			transform: translateY(50px);
-			transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-		}
-	  
-		.section.visible {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	  
-		@media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1200px) {
-			footer {
-				font-size: 12px;
-			}
-			#footer {
-				height: auto;
-			}
-		}
-	  
-		@media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1900px) {
-			.break-m {
-				display: block;
-			}
-		}
-	  
-		.icon.fa-kakao {
-			background: url('images/kakao.png') no-repeat center center;
-			background-size: cover;
-		}
-	  
-		.icon.fa-phon {
-			background: url('images/phon.png') no-repeat center center;
-			background-size: cover;
-		}
-	  
-		.icon.fa-mail {
-			background: url('images/kakao.png') no-repeat center center;
-			background-size: cover;
-		}
-	  
-		/* Modal (background) */
-		.modal {
-			display: none; /* Hidden by default */
-			position: fixed; /* Stay in place */
-			z-index: 1; /* Sit on top */
-			padding-top: 100px; /* Location of the box */
-			left: 0;
-			top: 0;
-			width: 100%; /* Full width */
-			height: 100%; /* Full height */
-			overflow: auto; /* Enable scroll if needed */
-			background-color: rgb(0,0,0); /* Fallback color */
-			background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-		}
-	  
-		/* Modal Content (image) */
-		.modal-content {
-			margin: auto;
-			display: block;
-			width: 80%;
-			max-width: 700px;
-		}
-	  
-		/* Gallery Styles */
-		.gallery {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-around;
-		}
-	  
-		.gallery-item {
-			position: relative;
-			margin: 10px;
-			width: calc(33.333% - 20px); /* Three items per row with spacing */
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	  
-		.gallery-item img {
-			width: 100%;
-			height: auto;
-			display: block;
-		}
-	  
-		/* Centering the caption and making its size relative to the gallery item */
-		.caption {
-			position: absolute;
-			background: rgba(0, 0, 0, 0.7);
-			color: #fff;
-			text-align: center;
-			padding: 5px;
-			box-sizing: border-box;
-			border-radius: 5px; /* Optional: adds rounded corners */
-			max-width: 90%; /* Ensures the caption doesn't stretch too wide */
-			font-size: 3vw; /* Dynamic font size relative to viewport width */
-			line-height: 1.2; /* For better readability */
-			overflow-wrap: break-word; /* Ensure long words are broken */
-		}
-	  
-		/* Ensure caption scales down on smaller screens */
-		@media screen and (max-width: 600px) {
-			.caption {
-				font-size: 2vw; /* Increase relative size for smaller screens */
-			}
-		}
-	  
-		@media screen and (min-width: 601px) and (max-width: 1200px) {
-			.caption {
-				font-size: 2vw; /* Intermediate size for medium screens */
-			}
-		}
-	  
-		@media screen and (min-width: 1201px) {
-			.caption {
-				font-size: 2vw; /* Default relative size for larger screens */
-			}
-		}
-	  
-		/* Add Animation - Zoom in the Modal */
-		.modal-content, #caption { 
-			animation-name: zoom;
-			animation-duration: 0.6s;
-		}
-	  
-		@keyframes zoom {
-			from {transform:scale(0)} 
-			to {transform:scale(1)}
-		}
-	  
-		/* The Close Button */
-		.close {
-			position: absolute;
-			top: 15px;
-			right: 35px;
-			color: #f1f1f1;
-			font-size: 40px;
-			font-weight: bold;
-			transition: 0.3s;
-		}
-	  
-		.close:hover,
-		.close:focus {
-			color: #bbb;
-			text-decoration: none;
-			cursor: pointer;
-		}
-	  
-		/* Add this CSS for responsive video */
-		.video-container {
-			position: relative;
-			padding-bottom: 56.25%; /* 16:9 aspect ratio */
-			height: 0;
-			overflow: hidden;
-			max-width: 100%;
-			background: #00000000;
-		}
-	  
-		.video-container iframe {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
-	  
-		.video-container video {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
-	  
-		.section .image-container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			min-height: 300px; /* 섹션 높이를 적절히 설정 */
-		}
-	  
-		.image.avatar50 img {
-			max-width: 100%;
-			height: auto;
-		}
-	  
-		.scroll-progress {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 0;
-			height: 5px;
-			background: #22c414;
-			z-index: 1000;
-			transition: width 0.25s ease-out;
-		}
-	  </style>
-	  
-		
-	<body class="is-preload">
-		<div class="scroll-progress"></div>
-		<!-- Header -->
-			<div id="header">
+        button:active {
+            background-color: #004080;
+            transform: scale(0.95);
+        }
 
-				<div class="top">
+        @media screen and (max-width: 600px), screen and (min-width: 601px) and (max-width: 1900px) {
+            .break-m {
+                display: block;
+            }
+        }
 
-					<!-- Logo -->
-						<div id="logo">
-							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">신명호</h1>
-							<p>Geospatial Information Engineer</p>
-						</div>
+        @media (max-width: 600px) {
+            button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="#top" id="top-link"><span class="icon solid fa-home">Intro</span></a></li>
-								<li><a href="#about" id="about-link"><span class="icon solid fa-user">About Me</span></a></li>
-								<li><a href="#portfolio" id="portfolio-link"><span class="icon solid fa-th">Certificate</span></a></li>
-								<li><a href="#abset" id="abset-link"><span class="icon solid fa-envelope">Vision</span></a></li>
-								<li><a href="https://realscent.github.io/shinmyeongho/portfolio/gallery/" id="gallery-link"><span class="icon solid fa-images">Gallery</span></a></li>
-							</ul>
-						</nav>
+        .modal-certificate, .modal-license, .modal-chart {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.637);
+            justify-content: center;
+            align-items: center;
+        }
 
-				</div>
+        .modal-content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .modal-content-certificate, .modal-content-license, .modal-content-chart {
+            background-color: rgba(202, 198, 198, 0.623); /* 이미지 크기에 맞는 배경 */
+            padding: 10px;
+            border-radius: 10px; /* 모서리를 둥글게 */
+        }
+        
+        .modal-header {
+            display: none;
+        }
+        
+        <!-- .modal-content-certificate, .modal-content-license, .modal-content-chart {
+            max-width: 80%;
+            max-height: 70%;
+            margin-bottom: 20px;
+            object-fit: contain;
+        } -->
 
-				<div class="bottom">
+        .modal-video {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
 
-					<!-- Social Icons -->
-					<ul class="icons">
-						<li><a href="#" onclick="openImageInModal('images/kakaoQR.png', '카카오톡 친구 추가')" class="icon brands fa-kakao"><span class="label">kakaotalk</span></a></li>
-						<li><a href="tel:010-8352-4471" onclick="openImageInModal('images/kakaoQR.png', '연락처 복사')" class="icon brands fa-phon"><span class="label">phonnumber</span></a></li>
-					</ul>
-					
+        .modal-content-video {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            height: 90%;
+            max-width: 80%;
+            max-height: 80%;
+        }
 
-				</div>
+        .video-container {
+            width: 100%;
+            height: 0;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+        }
 
-			</div>
-<!-- Modal Structure -->
-<div id="myModal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage">
-    <div id="caption"></div>
-</div>
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-<!-- Rest of your HTML content -->
+        .video-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
 
-<!-- Main -->
-<div id="main">
-    <!-- Intro -->
-	<section id="top" class="">
-		<div class="video-background">
-			<video autoplay muted loop playsinline id="bgVideo">
-				<source src="images/top.mp4" type="video/mp4">
-			</video>
-		</div>
-		<div class="container">
-			<header>
-				<h2 class="alt">안녕하세요! <br class='break-m'> <strong>공간정보산업 경력 6년</strong>,<br class='break-m'>
-					<strong>공간정보엔지니어<br class='break-m'>신명호</strong> 입니다!</h2>
-				<hr>
-				<p style="font-size : 13px";>#GISDB구축 #정밀도로지도구축 #POI구축 #수치지도제작 #지하시설물 #국가기준점설치&이전<br class='break-m'>
-				#GNSS #RTK멀티콥터드론 #MMS #지거 #지하시설물탐사기 #토털스테이션<br class='break-m'>
-				#Python #SQL #HTML #QGIS #AutoCAD #Pix4D #SketchUP #2D #3D #Photoshop #Office</p>
-			</header>
-			<footer>
-				<a href="#about" class="button scrolly">소개</a>
-				<a href="#portfolio" class="button scrolly">자격증</a>
-				<a href="#abset" class="button scrolly">비전</a>
-				<a href="https://realscent.github.io/shinmyeongho/portfolio/gallery/" class="button scrolly">갤러리</a>
-			</footer>
-		</div>
-	</section>
-	
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 10; /* Ensure close button is on top */
+        }
 
-    <!-- About Me -->
-    <section id="about" class="three">
-        <div class="container">
-            <header>
-                <h2>About Me</h2>
-            </header>
-            <a href="#" class="image featured"><img src="images/pic08.png" alt="" /></a>
-            <p>
-            저는 공간정보 6년차로써 측량과 관련된 국가사업, 공공기관, 민간 사업을 두루 경험해 보았습니다. 
-            다양한 측량사업으로 정밀도로지도, POI 및 GIS DB구축 용역의 착수부터 준공까지하며, 시스템 유지보수까지.
-            이러한 경험들을 바탕으로 <strong style="font-weight:900;">자동화 기술과 노하우</strong>를 보여 드리겠습니다.
-            </p>
-		자체제작영상(디졸브영상편집툴활용)<br class='break-m'>
-		<div class="video-container">			
-                <iframe src="https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>    	
-		<br class='break-m'>
-		Portfolio 정리영상<br class='break-m'>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/kQarRwDZmxw?si=_ClggdpXl-RVbmUN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>    
-		<br class='break-m'>
-            사업경험/역량/비전 PPT자료 <br class='break-m'>
-            <div class="video-container">
-                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSYDqguJooYlhit37ynXoGC5OzZC2a5AqM-7gdSeKCl4jc-m_HyF0KiHF4rlEZm28YAAGjgR9OFt1_E/embed?start=true&loop=true&delayms=10000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-            </div>      
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            user-select: none;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #backButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #backButton:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        #backButton:active {
+            background-color: #bd2130;
+            transform: scale(0.95);
+        }
+
+        @media all and (max-width: 1024px) {
+            /* 일반버전(2) - PC작은창, 태블릿 */
+            .modal-content-certificate, .modal-content-license, .modal-content-chart {
+                max-width: 80%;
+                max-height: 80%;
+            }
+        }
+
+        @media all and (max-width: 767px) {
+            /* 모바일버전(1) - 일반 스마트폰 */
+            .modal-content-certificate, .modal-content-license, .modal-content-chart {
+                max-width: 90%;
+                max-height: 90%;
+            }
+        }
+
+        @media all and (max-width: 280px) {
+            /* 모바일버전(2) - 갤럭시 플립 */
+            .modal-content-certificate, .modal-content-license, .modal-content-chart {
+                max-width: 95%;
+                max-height: 95%;
+            }
+
+            .page-number {
+                font-size: 14px;
+            }
+
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                color: white;
+                font-size: 40px;
+                font-weight: bold;
+                transition: 0.3s;
+            }
+        }
+    </style>
+    <script>
+        function goBack() {
+            window.location.href = "https://realscent.github.io/shinmyeongho/portfolio";
+        }
+
+        function loadVideo(url) {
+            document.getElementById("modalVideo").src = url;
+        }
+    </script>
+</head>
+<body>
+
+    <video autoplay muted loop class="background-video">
+        <source src="../images/top.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <button id="backButton" onclick="goBack()">돌아가기</button>
+    <button id="openVideoModalBtn">영상제작물 시청</button>
+    <button id="openModalBtn">경력증명서 열람</button>
+    <button id="openLicenseModalBtn">자격증 열람</button>
+    <button id="openChartModalBtn">역량차트 열람</button>
+
+    <div class="contact-info">
+        Name : 신명호<br>
+        eMail : <a href="mailto:scent7942@gmail.com">scent7942@gmail.com</a><br>
+        Tel : <a href="tel:010-8352-4471">010-8352-4471</a>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div id="certificateModal" class="modal-certificate">
+        <span class="close">&times;</span>
+        <div class="modal-content-container">
+            <img class="modal-content-certificate" id="modalImage">
+            <div class="page-number" id="pageNumber"></div>
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
+        </div>
+    </div>
+    
+    <!-- License Modal -->
+    <div id="licenseModal" class="modal-license">
+        <span class="close">&times;</span>
+        <div class="modal-content-container">
+            <img class="modal-content-license" id="licenseModalImage">
+            <div class="page-number" id="licensePageNumber"></div>
+            <a class="prev license-prev">&#10094;</a>
+            <a class="next license-next">&#10095;</a>
+        </div>
+    </div>
+
+        <!-- Chart Modal -->
+        <div id="chartModal" class="modal-chart">
+            <span class="close">&times;</span>
+            <div class="modal-content-container">
+                <img class="modal-content-chart" id="chartModalImage">
+                <div class="page-number" id="chartPageNumber"></div>
+                <a class="prev chart-prev">&#10094;</a>
+                <a class="next chart-next">&#10095;</a>
+            </div>
         </div>
 
-					</section>
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal-video">
+        <span class="close">&times;</span>
+        <div class="modal-content-video">
+            <div class="video-container">
+                <iframe id="modalVideo" src="https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-buttons">
+                <button onclick="loadVideo('https://www.youtube.com/embed/K4f1a1-2sw4?si=GayPJ9ysx9RdIA_3')">영상 1</button>
+                <button onclick="loadVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH16GZU')">영상 2</button>
+            </div>
+        </div>
+    </div>
 
-									<!-- Portfolio -->
-									<section id="portfolio" class="two">
-										<div class="container">
-				
-											<header>
-												<h2>Certificate</h2>
-											</header>
-				
-											<p> <strong>노력과, 성실함</strong><br class='break-m'>
-												저를 나타내는것은 꾸준함입니다.
-												어떠한 환경속에서도 배움의 자세를 잊지 않습니다. 
-											</p>
-				
-										    <div class="gallery">
-												<div class="gallery-item">
-													<img src="images/측량및지형공간정보기사.jpg" alt="측량및지형공간정보기사">
-													<div class="caption">측량 및<br class='break-m'>지형공간정보<br class='break-m'>기사</div>
-												</div>
-												<div class="gallery-item">
-													<img src="images/측량및지형공간정보산업기사.jpg" alt="측량및지형공간정보산업기사">
-													<div class="caption">측량 및<br class='break-m'>지형공간정보<br class='break-m'>산업기사</div>
-												</div>
-												<div class="gallery-item">
-													<img src="images/측량기능사.jpg" alt="측량기능사">
-													<div class="caption">측량기능사</div>
-												</div>
-												<div class="gallery-item">
-													<img src="images/전산응용토목제도기능사.jpg" alt="전산응용토목제도기능사">
-													<div class="caption">전산응용토목제도기능사</div>
-												</div>
-												<div class="gallery-item">
-													<img src="images/지도제작기능사.jpg" alt="지도제작기능사">
-													<div class="caption">지도제작기능사</div>
-												</div>
-												<div class="gallery-item">
-													<img src="images/건설재료시험기능사.jpg" alt="건설재료시험기능사">
-													<div class="caption">건설재료시험기능사</div>
-												</div>
-											</div>
-										
-											<div id="myModal" class="modal">
-												<span class="close">&times;</span>
-												<img class="modal-content" id="img01">
-												<div id="caption"></div>
-											</div>
-										
-											<script src="script.js"></script>
-											<hr>
-											<p> 
-												이 외에도 정보처리기사 필기에 합격하고 실기 준비중에 있습니다.
-											</p>
-									</section>
-				
-				<!-- Vision -->
-				<section id="abset" class="four">
-					<div class="container">
-				
-						<header>
-						</header>
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar49"><img src="images/비전.png" alt="비전 이미지"></span>
-															</div>
-							<br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'>
-						</div>
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar49"><img src="images/능률분포.png" alt="능률분포 이미지"></span>
-								
-							</div>
-							<br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'>
-						</div>
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar49"><img src="images/능률차트.png" alt="능률차트 이미지"></span>
-								
-							</div>
-							<br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'>
-						</div>
-				
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar50"><img src="images/2.png" alt="운용장비 기술 간략"></span>
-							</div><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'>
-						</div>
-				
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar51"><img src="images/사용프로그램.png" alt="사업의 필요성 이미지"></span>
-							</div><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'>
-						</div>
-				
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar51"><img src="images/사업경험.png" alt="사업경험라벨"></span>
-							</div>
-							<div class="video-container">
-								<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSYDqguJooYlhit37ynXoGC5OzZC2a5AqM-7gdSeKCl4jc-m_HyF0KiHF4rlEZm28YAAGjgR9OFt1_E/embed?start=true&loop=true&delayms=10000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-							</div>
-						</div><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'><br class='break-m'>
-						<div class="section">
-							<div class="image-container">
-								<span class="image avatar51"><img src="images/입사후포부.png" alt="사업경험라벨"></span>
-							</div>	
-						</div>
-					</div>				
-				</section>
-				
+    <script>
+        // Certificate Modal Logic
+        var certificateModal = document.getElementById('certificateModal');
+        var certificateBtn = document.getElementById('openModalBtn');
+        var certificateSpan = certificateModal.getElementsByClassName('close')[0];
+        var certificateImages = [
+            "../images/Career/1.png",
+            "../images/Career/2.png",
+            "../images/Career/3.png",
+            "../images/Career/4.png",
+            "../images/Career/5.png"
+        ];
+        var certificateIndex = 0;
 
-			</div>
+        certificateBtn.onclick = function() {
+            certificateModal.style.display = "flex";
+            loadCertificateImage(certificateIndex);
+        }
 
-		<!-- Footer -->
-			<div id="footer">
+        certificateSpan.onclick = function() {
+            certificateModal.style.display = "none";
+        }
 
-				<!-- Copyright -->
-			
-					<ul class="신명호 : 010-8352-4471">
-						<li>&copy; 신명호 : <a href="tel:010-8352-4471">010-8352-4471</a></li><li>email: <a href="mailto:scent7942@gmail.com">scent7942@gmail.com</a></li>
-					</ul>
+        function loadCertificateImage(index) {
+            document.getElementById('modalImage').src = certificateImages[index];
+            document.getElementById('pageNumber').innerText = `Page ${index + 1} of ${certificateImages.length}`;
+        }
 
-			</div>
+        var prevBtn = certificateModal.getElementsByClassName('prev')[0];
+        var nextBtn = certificateModal.getElementsByClassName('next')[0];
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+        prevBtn.onclick = function() {
+            certificateIndex = (certificateIndex - 1 + certificateImages.length) % certificateImages.length;
+            loadCertificateImage(certificateIndex);
+        }
 
-			<!-- 카카오톡큐알뜨는스크립트 -->
-			<script>
-// Get the modal
-var modal = document.getElementById("myModal");
+        nextBtn.onclick = function() {
+            certificateIndex = (certificateIndex + 1) % certificateImages.length;
+            loadCertificateImage(certificateIndex);
+        }
 
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var modalImg = document.getElementById("modalImage");
-var captionText = document.getElementById("caption");
+        // License Modal Logic
+        var licenseModal = document.getElementById('licenseModal');
+        var licenseBtn = document.getElementById('openLicenseModalBtn');
+        var licenseSpan = licenseModal.getElementsByClassName('close')[0];
+        var licenseImages = [
+            "../images/Certificate/측량및지형공간정보기사.jpg",
+            "../images/Certificate/측량및지형공간정보산업기사.jpg",
+            "../images/Certificate/측량기능사.jpg",
+            "../images/Certificate/지도제작기능사.jpg",
+            "../images/Certificate/전산응용토목제도기능사.jpg",
+            "../images/Certificate/건설재료시험기능사.jpg",
+            "../images/Certificate/항공사진기능사.jpg",
+            "../images/Certificate/ITQ자격증.jpg"
+        ];
+        var licenseIndex = 0;
 
-function openImageInModal(imageUrl, title) {
-    modal.style.display = "block";
-    modalImg.src = imageUrl;
-    captionText.innerHTML = title;
-}
+        licenseBtn.onclick = function() {
+            licenseModal.style.display = "flex";
+            loadLicenseImage(licenseIndex);
+        }
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+        licenseSpan.onclick = function() {
+            licenseModal.style.display = "none";
+        }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() { 
-    modal.style.display = "none";
-}
+        function loadLicenseImage(index) {
+            document.getElementById('licenseModalImage').src = licenseImages[index];
+            document.getElementById('licensePageNumber').innerText = `Page ${index + 1} of ${licenseImages.length}`;
+        }
 
-			</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var sections = document.querySelectorAll('#abset .section');
-    var options = {
-        rootMargin: '0px 0px -50% 0px',  // 화면의 50%가 지나면 트리거
-        threshold: 0.1
-    };
+        var licensePrevBtn = licenseModal.getElementsByClassName('prev license-prev')[0];
+        var licenseNextBtn = licenseModal.getElementsByClassName('next license-next')[0];
 
-    var observer = new IntersectionObserver(function (entries, observer) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, options);
+        licensePrevBtn.onclick = function() {
+            licenseIndex = (licenseIndex - 1 + licenseImages.length) % licenseImages.length;
+            loadLicenseImage(licenseIndex);
+        }
 
-    sections.forEach(function (section) {
-        observer.observe(section);
-    });
-});
+        licenseNextBtn.onclick = function() {
+            licenseIndex = (licenseIndex + 1) % licenseImages.length;
+            loadLicenseImage(licenseIndex);
+        }
 
-  </script>
-  <script>
-	window.onscroll = function() {
-		var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-		var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-		var scrolled = (winScroll / height) * 100;
-		document.querySelector('.scroll-progress').style.width = scrolled + '%';
-	};
-	</script>
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		var video = document.getElementById('bgVideo');
-		if (video) {
-			video.play();
-		}
-	});
-  </script>
+          // chart Modal Logic
+          var chartModal = document.getElementById('chartModal');
+          var chartBtn = document.getElementById('openChartModalBtn');
+          var chartSpan = chartModal.getElementsByClassName('close')[0];
+          var chartImages = [
+              "../images/능률분포.png",
+              "../images/능률차트.png",
+              "../images/사용프로그램.png",
+              "../images/2.png"
+          ];
+          var chartIndex = 0;
   
-	</body>
+          chartBtn.onclick = function() {
+              chartModal.style.display = "flex";
+              loadchartImage(chartIndex);
+          }
+  
+          chartSpan.onclick = function() {
+              chartModal.style.display = "none";
+          }
+  
+          function loadchartImage(index) {
+              document.getElementById('chartModalImage').src = chartImages[index];
+              document.getElementById('chartPageNumber').innerText = `Page ${index + 1} of ${chartImages.length}`;
+          }
+  
+          var chartPrevBtn = chartModal.getElementsByClassName('prev chart-prev')[0];
+          var chartNextBtn = chartModal.getElementsByClassName('next chart-next')[0];
+  
+          chartPrevBtn.onclick = function() {
+              chartIndex = (chartIndex - 1 + chartImages.length) % chartImages.length;
+              loadchartImage(chartIndex);
+          }
+  
+          chartNextBtn.onclick = function() {
+              chartIndex = (chartIndex + 1) % chartImages.length;
+              loadchartImage(chartIndex);
+          }
+
+        // Video Modal Logic
+        var videoModal = document.getElementById('videoModal');
+        var videoBtn = document.getElementById('openVideoModalBtn');
+        var videoSpan = videoModal.getElementsByClassName('close')[0];
+
+        videoBtn.onclick = function() {
+            videoModal.style.display = "flex";
+        }
+
+        videoSpan.onclick = function() {
+            videoModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == certificateModal) {
+                certificateModal.style.display = "none";
+            }
+            if (event.target == videoModal) {
+                videoModal.style.display = "none";
+            }
+            if (event.target == licenseModal) {
+                licenseModal.style.display = "none";
+            }
+        }
+        if (event.target == chartModal) {
+            chartModal.style.display = "none";
+        }
+
+    </script>
+</body>
 </html>
