@@ -370,6 +370,17 @@
       background-color: rgba(0, 0, 0, 0.2);
       cursor: not-allowed;
   }
+
+  .additional-info {  /* 데모모달폰트 */
+    color: #ffffff;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    font-style: italic; /* 예쁜 효과를 위한 기울임 */
+    max-width: 90%;
+}
     </style>
 
 
@@ -425,16 +436,16 @@
         </div>
     </div>
 
-        <!-- Chart Modal -->
-        <div id="chartModal" class="modal-chart">
-            <span class="close">&times;</span>
-            <div class="modal-content-container">
-                <img class="modal-content-chart" id="chartModalImage">
-                <div class="page-number" id="chartPageNumber"></div>
-                <a class="prev chart-prev">&#10094;</a>
-                <a class="next chart-next">&#10095;</a>
-            </div>
+    <!-- Chart Modal -->
+    <div id="chartModal" class="modal-chart">
+        <span class="close">&times;</span>
+        <div class="modal-content-container">
+            <img class="modal-content-chart" id="chartModalImage">
+            <div class="page-number" id="chartPageNumber"></div>
+            <a class="prev chart-prev">&#10094;</a>
+            <a class="next chart-next">&#10095;</a>
         </div>
+    </div>
 
     <!-- Video Modal -->
     <div id="videoModal" class="modal-video">
@@ -450,25 +461,27 @@
         </div>
     </div>
 
-<!-- 자작프로그램시연모달 -->
-<div id="demoModal" class="modal-video">
-  <span class="close">&times;</span>
-  <div class="modal-content-video">
-    <div class="video-container">
-        <iframe id="demoModalVideo" src="https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <div class="swiper-container">
-        <a class="swiper-button prev disabled" onclick="swipe(-1)">&lt;</a>
-        <div class="swiper-wrapper">
-            <button onclick="loadDemoVideo('https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj')">QGIS With kakaoRoadView & MMS</button>
-            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">LAS자동도화</button>
-            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">오종민박사논문참조 LR_Link에러검수</button>
-            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">각도이상검출 및 보완</button>
-            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">시종점노드 검수&매칭</button>
+    <!-- 자작 프로그램 시연 모달 -->
+    <div id="demoModal" class="modal-video">
+        <span class="close">&times;</span>
+        <div class="modal-content-video">
+            <div class="video-container">
+                <iframe id="demoModalVideo" src="https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="swiper-container">
+                <a class="swiper-button prev disabled" onclick="swipe(-1)">&lt;</a>
+                <div class="swiper-wrapper">
+                    <button onclick="loadDemoVideo('https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj')">QGIS With kakaoRoadView & MMS</button>
+                    <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">LAS자동도화</button>
+                    <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">오종민박사논문참조 LR_Link에러검수</button>
+                    <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">각도이상검출 및 보완</button>
+                    <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">시종점노드 검수&매칭</button>
+                </div>
+                <a class="swiper-button next" onclick="swipe(1)">&gt;</a>
+            </div>
+            <p class="additional-info">모두 신명호 본인이 100% 필요에 의하여 자체제작한 것으로써, 이 외에도 50가지에 달하는 유용한 PYQGIS 기능과 Python 프로그래밍을 하였습니다.</p>
         </div>
-        <a class="swiper-button next" onclick="swipe(1)">&gt;</a>
     </div>
-</div>
 </div>
 
     <script>
@@ -626,58 +639,67 @@
     </script>
 
     <script>
-      // 자작프로그램시연 Modal Logic
-      var demoModal = document.getElementById('demoModal');
-      var demoBtn = document.getElementById('openDemoModalBtn');
-      var demoSpan = demoModal.getElementsByClassName('close')[0];
-  
-      demoBtn.onclick = function() {
-          demoModal.style.display = "flex";
-          // Check initial arrow states when opening the modal
-          setTimeout(updateSwiper, 0);
-      }
-  
-      demoSpan.onclick = function() {
-          demoModal.style.display = "none";
-          document.getElementById("demoModalVideo").src = ""; // Stop video playback when closing the modal
-      }
-  
-      function loadDemoVideo(url) {
-          document.getElementById("demoModalVideo").src = url;
-      }
-  
-      // Swiper functionality
-      const swiperWrapper = document.querySelector('.swiper-wrapper');
-      const prevButton = document.querySelector('.swiper-button.prev');
-      const nextButton = document.querySelector('.swiper-button.next');
-      const scrollAmount = 160; // Amount to scroll with each button click
-  
-      function updateSwiper() {
-          // Update button disabled states based on scroll position
-          prevButton.classList.toggle('disabled', swiperWrapper.scrollLeft === 0);
-          nextButton.classList.toggle('disabled', swiperWrapper.scrollLeft + swiperWrapper.clientWidth >= swiperWrapper.scrollWidth);
-      }
-  
-      function swipe(direction) {
-          swiperWrapper.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-          // Force update after scroll to refresh button state
-          setTimeout(updateSwiper, 300); 
-      }
-  
-      // Initialize swiper button states
-      updateSwiper();
-  
-      // Ensure update on scroll
-      swiperWrapper.addEventListener('scroll', updateSwiper);
-  
-      // Close the demo modal when clicking outside of it
-      window.onclick = function(event) {
-          if (event.target == demoModal) {
-              demoModal.style.display = "none";
-              document.getElementById("demoModalVideo").src = ""; // Stop video playback
-          }
-      }
-  </script>
-  
+        // 각 모달별로 독립적인 close 이벤트 설정
+        function setupModal(modalId, btnId, closeClass, closeCallback = null) {
+            const modal = document.getElementById(modalId);
+            const btn = document.getElementById(btnId);
+            const span = modal.getElementsByClassName(closeClass)[0];
+
+            btn.onclick = function() {
+                modal.style.display = "flex";
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+                if (closeCallback) closeCallback();
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    if (closeCallback) closeCallback();
+                }
+            }
+        }
+
+        // 모달 초기화
+        setupModal('certificateModal', 'openModalBtn', 'close');
+        setupModal('licenseModal', 'openLicenseModalBtn', 'close');
+        setupModal('chartModal', 'openChartModalBtn', 'close');
+        setupModal('videoModal', 'openVideoModalBtn', 'close');
+        setupModal('demoModal', 'openDemoModalBtn', 'close', () => {
+            document.getElementById("demoModalVideo").src = ""; // 데모 모달 닫힐 때 비디오 재생 중지
+        });
+        
+        // Demo Modal 버튼 클릭 시 Swiper 초기화 및 기본 비디오 URL 설정
+        document.getElementById('openDemoModalBtn').onclick = function() {
+            demoModal.style.display = "flex";
+            document.getElementById("demoModalVideo").src = "https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj"; // 기본 비디오 URL 설정
+            setTimeout(updateSwiper, 100); // Swiper 초기화
+        };
+        function loadDemoVideo(url) {
+            document.getElementById("demoModalVideo").src = url;
+        }
+
+        // Swiper 관련 기능
+        const swiperWrapper = document.querySelector('.swiper-wrapper');
+        const prevButton = document.querySelector('.swiper-button.prev');
+        const nextButton = document.querySelector('.swiper-button.next');
+        const scrollAmount = 160;
+
+        function updateSwiper() {
+            prevButton.classList.toggle('disabled', swiperWrapper.scrollLeft === 0);
+            nextButton.classList.toggle('disabled', swiperWrapper.scrollLeft + swiperWrapper.clientWidth >= swiperWrapper.scrollWidth);
+        }
+
+        function swipe(direction) {
+            swiperWrapper.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            setTimeout(updateSwiper, 300);
+        }
+
+        updateSwiper();
+        swiperWrapper.addEventListener('scroll', updateSwiper);
+    </script>
+
 </body>
 </html>
