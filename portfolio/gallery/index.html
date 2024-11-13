@@ -297,7 +297,82 @@
                 transition: 0.3s;
             }
         }
+
+
+
+    /* Swiper container styling */
+    .swiper-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 60%;
+      margin: 20px auto 0; /* Space between video and swiper */
+  }
+
+  /* Swiper wrapper for buttons */
+  .swiper-wrapper {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+      scrollbar-width: none;
+  }
+
+  .swiper-wrapper::-webkit-scrollbar {
+      display: none;
+  }
+
+  /* Buttons inside the swiper */
+  .swiper-wrapper button {
+      flex: 0 0 150px;
+      padding: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      background-color: #007bff7c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+      white-space: nowrap;
+  }
+
+  .swiper-wrapper button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+  }
+
+  /* Navigation buttons */
+  .swiper-button {
+      font-size: 1.5em;
+      padding: 10px;
+      color: #ffffff;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      user-select: none;
+      z-index: 1;
+  }
+
+  /* Position arrows further outside the swiper-wrapper */
+  .prev {
+      margin-right: -30px; /* Move further left outside */
+  }
+
+  .next {
+      margin-left: -30px; /* Move further right outside */
+  }
+
+  .swiper-button.disabled {
+      color: #888888;
+      background-color: rgba(0, 0, 0, 0.2);
+      cursor: not-allowed;
+  }
     </style>
+
+
     <script>
         function goBack() {
             window.location.href = "https://realscent.github.io/shinmyeongho/portfolio";
@@ -315,8 +390,9 @@
         Your browser does not support the video tag.
     </video>
 
-    <button id="backButton" onclick="goBack()">돌아가기</button>
+    <button id="backButton" onclick="goBack()">Portfolio Page</button>
     <button id="openVideoModalBtn">영상제작물 시청</button>
+    <button id="openDemoModalBtn">자작 프로그램 시연</button>
     <button id="openModalBtn">경력증명서 열람</button>
     <button id="openLicenseModalBtn">자격증 열람</button>
     <button id="openChartModalBtn">역량차트 열람</button>
@@ -374,6 +450,27 @@
         </div>
     </div>
 
+<!-- 자작프로그램시연모달 -->
+<div id="demoModal" class="modal-video">
+  <span class="close">&times;</span>
+  <div class="modal-content-video">
+    <div class="video-container">
+        <iframe id="demoModalVideo" src="https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div class="swiper-container">
+        <a class="swiper-button prev disabled" onclick="swipe(-1)">&lt;</a>
+        <div class="swiper-wrapper">
+            <button onclick="loadDemoVideo('https://www.youtube.com/embed/aRbQIYbYAK0?si=YkqZwg0fTP0YOAJj')">QGIS With kakaoRoadView & MMS</button>
+            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">LAS자동도화</button>
+            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">오종민박사논문참조 LR_Link에러검수</button>
+            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">각도이상검출 및 보완</button>
+            <button onclick="loadDemoVideo('https://www.youtube.com/embed/kQarRwDZmxw?si=S5u7dN34VHH1fsdfU')">시종점노드 검수&매칭</button>
+        </div>
+        <a class="swiper-button next" onclick="swipe(1)">&gt;</a>
+    </div>
+</div>
+</div>
+
     <script>
         // Certificate Modal Logic
         var certificateModal = document.getElementById('certificateModal');
@@ -399,7 +496,7 @@
 
         function loadCertificateImage(index) {
             document.getElementById('modalImage').src = certificateImages[index];
-            document.getElementById('pageNumber').innerText = `Page ${index + 1} of ${certificateImages.length}`;
+            document.getElementById('pageNumber').innerText = Page ${index + 1} of ${certificateImages.length};
         }
 
         var prevBtn = certificateModal.getElementsByClassName('prev')[0];
@@ -442,7 +539,7 @@
 
         function loadLicenseImage(index) {
             document.getElementById('licenseModalImage').src = licenseImages[index];
-            document.getElementById('licensePageNumber').innerText = `Page ${index + 1} of ${licenseImages.length}`;
+            document.getElementById('licensePageNumber').innerText = Page ${index + 1} of ${licenseImages.length};
         }
 
         var licensePrevBtn = licenseModal.getElementsByClassName('prev license-prev')[0];
@@ -481,7 +578,7 @@
   
           function loadchartImage(index) {
               document.getElementById('chartModalImage').src = chartImages[index];
-              document.getElementById('chartPageNumber').innerText = `Page ${index + 1} of ${chartImages.length}`;
+              document.getElementById('chartPageNumber').innerText = Page ${index + 1} of ${chartImages.length};
           }
   
           var chartPrevBtn = chartModal.getElementsByClassName('prev chart-prev')[0];
@@ -524,7 +621,63 @@
         if (event.target == chartModal) {
             chartModal.style.display = "none";
         }
+        
 
     </script>
+
+    <script>
+      // 자작프로그램시연 Modal Logic
+      var demoModal = document.getElementById('demoModal');
+      var demoBtn = document.getElementById('openDemoModalBtn');
+      var demoSpan = demoModal.getElementsByClassName('close')[0];
+  
+      demoBtn.onclick = function() {
+          demoModal.style.display = "flex";
+          // Check initial arrow states when opening the modal
+          setTimeout(updateSwiper, 0);
+      }
+  
+      demoSpan.onclick = function() {
+          demoModal.style.display = "none";
+          document.getElementById("demoModalVideo").src = ""; // Stop video playback when closing the modal
+      }
+  
+      function loadDemoVideo(url) {
+          document.getElementById("demoModalVideo").src = url;
+      }
+  
+      // Swiper functionality
+      const swiperWrapper = document.querySelector('.swiper-wrapper');
+      const prevButton = document.querySelector('.swiper-button.prev');
+      const nextButton = document.querySelector('.swiper-button.next');
+      const scrollAmount = 160; // Amount to scroll with each button click
+  
+      function updateSwiper() {
+          // Update button disabled states based on scroll position
+          prevButton.classList.toggle('disabled', swiperWrapper.scrollLeft === 0);
+          nextButton.classList.toggle('disabled', swiperWrapper.scrollLeft + swiperWrapper.clientWidth >= swiperWrapper.scrollWidth);
+      }
+  
+      function swipe(direction) {
+          swiperWrapper.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+          // Force update after scroll to refresh button state
+          setTimeout(updateSwiper, 300); 
+      }
+  
+      // Initialize swiper button states
+      updateSwiper();
+  
+      // Ensure update on scroll
+      swiperWrapper.addEventListener('scroll', updateSwiper);
+  
+      // Close the demo modal when clicking outside of it
+      window.onclick = function(event) {
+          if (event.target == demoModal) {
+              demoModal.style.display = "none";
+              document.getElementById("demoModalVideo").src = ""; // Stop video playback
+          }
+      }
+  </script>
+  
 </body>
 </html>
